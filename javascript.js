@@ -17,47 +17,92 @@ function playRound(playerSelection, computerSelection) {
         case 'rock':
             switch(computerSelection) {
                 case 'rock':
-                    return 'Draw'
+                    return 0
                 case 'paper':
-                    return 'Loser! Loser!! haha'
+                    return -1
                 case 'scissors':
-                    return 'Winner is you!'
+                    return 1
             }
         case 'paper':
             switch(computerSelection) {
                 case 'rock':
-                    return 'Winner is you!'
+                    return 1
                 case 'paper':
-                    return 'Draw'
+                    return 0
                 case 'scissors':
-                    return 'Loser! Loser!! haha'
+                    return -1
             }
         case 'scissors':
             switch(computerSelection) {
                 case 'rock':
-                    return 'Loser! Loser!! haha'
+                    return -1
                 case 'paper':
-                    return 'Winner is you!'
+                    return 1
                 case 'scissors':
-                    return 'Draw'
+                    return 0
             }
     }
 }
 
+let wins = 0
+let losses = 0
+let draws = 0
+
 const rock = document.querySelector('#rock');
 rock.addEventListener('click', () => {
-    console.log(playRound('rock', computerPlay()))
+    let result = playRound('rock', computerPlay())
+    if (result == 0) {
+        draws += 1
+    } else if (result < 0) {
+        losses += 1
+    } else {
+        wins += 1
+    }
+    updateResults()
 })
 
 const paper = document.querySelector('#paper');
 paper.addEventListener('click', () => {
-    console.log(playRound('paper', computerPlay()))
+    let result = playRound('paper', computerPlay())
+    if (result == 0) {
+        draws += 1
+    } else if (result < 0) {
+        losses += 1
+    } else {
+        wins += 1
+    }
+    updateResults()
 })
 
 const scissors = document.querySelector('#scissors');
 scissors.addEventListener('click', () => {
-    console.log(playRound('paper', computerPlay()))
+    let result = playRound('scissors', computerPlay())
+    if (result == 0) {
+        draws += 1
+    } else if (result < 0) {
+        losses += 1
+    } else {
+        wins += 1
+    }
+    updateResults()
 })
 
+const results = document.querySelector('#results');
+const linebreak = document.createElement("br");
 
-// game()
+function updateResults() {
+    if (wins === 5) {
+        alert('You Win!')
+        wins = 0
+        losses = 0
+        draws = 0
+    } else if (losses === 5) {
+        alert('You are a loser!')
+        wins = 0
+        losses = 0
+        draws = 0
+    }
+    results.innerHTML = `Your wins: ${wins}<br></br>Your losses: ${losses}<br></br>Draws: ${draws}`
+}
+
+updateResults()
